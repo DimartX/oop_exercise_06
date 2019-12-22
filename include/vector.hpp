@@ -63,6 +63,7 @@ namespace bad {
             for (size_t i = idx; i < size_-1; i++) {
                 data_[i] = data_[i+1];
             }
+            --size_;
         }
         
         void push_back(const T& newdata_) {

@@ -17,6 +17,11 @@ oop_excercise_06 = executable('oop_excercise_06',
   include_directories : inc, 
   link_with : my_lib)
 
+map_work = executable('map_work', 
+  map_source, 
+  include_directories : inc, 
+  link_with : my_lib)
+
 if get_option('enable-tests')
   subdir('tests')
 endif

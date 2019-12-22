@@ -59,9 +59,12 @@ T* my_allocator<T, BLOCK_SIZE>::allocate(std::size_t n) {
         }
         throw std::bad_alloc();
     }
-    T* result = reinterpret_cast<T*>(memory_pool_tail_);
-    memory_pool_tail_ += sizeof(T);
-    return result;
+    else {
+        T* result = reinterpret_cast<T*>(memory_pool_tail_);
+        memory_pool_tail_ += n * sizeof(T);
+        return result;
+    }
+    throw std::bad_alloc();
 }
 
 template<class T, size_t BLOCK_SIZE>
@@ -70,14 +73,14 @@ void my_allocator<T, BLOCK_SIZE>::deallocate(T* ptr, std::size_t n) {
         return;
     }
     char* freePtr = reinterpret_cast<char*>(ptr);
-    size_t freeSize = n;
+    size_t freeSize = n * sizeof(T);
     free_blocks_.push_back(std::pair{freePtr, freeSize});
 }
 
 template<class T, size_t BLOCK_SIZE>
 size_t my_allocator<T, BLOCK_SIZE>::search_free_block(size_t n) {
-    for (size_t i = 0; i < n; i++) {
-        if (free_blocks_[i].second >= n)
+    for (size_t i = 0; i < free_blocks_.size(); i++) {
+        if (free_blocks_[i].second >= n * sizeof(T))
             return i;
     }
     throw std::bad_alloc();

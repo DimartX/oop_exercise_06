@@ -13,7 +13,7 @@ void help() {
 }
 
 int main() {
-    bad::stack<Triangle<int>, my_allocator<Triangle<int>, 100> > stack_tri;
+    bad::stack<Triangle<int>, my_allocator<Triangle<int>, 200> > stack_tri;
     while (std::cin) {
         std::string perform;
         std::cin >> perform;

@@ -33,12 +33,16 @@ Point<T> operator- (Point<T> const& a, Point<T> const& b) {
 }
 
 template<class T>
-Point<T> operator* (Point<T> const& a, double const& b) {
+Point<T> operator* (Point<T> const& a, T const& b) {
     return Point<T>{a.x * b, a.y * b};
 }
 
 template<class T>
-Point<T> operator/ (Point<T> const& a, double const& b) {
+Point<T> operator/ (Point<T> const& a, T const& b) {
     return Point<T>{a.x / b, a.y / b};
 }
 
+template<class T>
+bool operator== (Point<T> const& a, Point<T> const& b) {
+    return (a.x == b.x) && (a.y == b.y);
+}

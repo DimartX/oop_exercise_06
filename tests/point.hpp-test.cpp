@@ -1,44 +1,35 @@
-#pragma once
+#define BOOST_TEST_DYN_LINK
+#define BOOST_TEST_MODULE point
+#include <boost/test/unit_test.hpp>
+#include "../include/point.hpp"
 
-#include <iostream>
+BOOST_AUTO_TEST_SUITE(point)
 
-template<class T>
-struct Point {
-    T x, y;
-
-    Point(T x, T y) : x(x), y(y) {};
-    Point() = default;
-};
-
-template<class T>
-std::istream& operator>> (std::istream& in, Point<T>& pt) {
-    in >> pt.x >> pt.y;
-    return in;
+BOOST_AUTO_TEST_CASE(addition)
+{
+    Point<int> p1{1, 1};
+    Point<int> p2{-99, -10};
+    BOOST_REQUIRE_EQUAL((p1 + p2), (Point<int>{-98, -9}));
 }
 
-template<class T>
-std::ostream& operator<< (std::ostream& out, Point<T> const& pt) {
-    out << pt.x << ' ' << pt.y;
-    return out;
+    
+BOOST_AUTO_TEST_CASE(substraction)
+{
+    Point<int> p1{1, 1};
+    Point<int> p2{-99, -10};
+    BOOST_REQUIRE_EQUAL(p1 - p2, (Point<int>{100, 11}));
 }
 
-template<class T>
-Point<T> operator+ (Point<T> const& a, Point<T> const& b) {
-    return Point<T>{a.x + b.x, a.y + b.y};
+BOOST_AUTO_TEST_CASE(multiplication)
+{
+    Point<int> p1{1, 1};
+    BOOST_REQUIRE_EQUAL(p1 * 33, (Point<int>{33, 33}));
 }
 
-template<class T>
-Point<T> operator- (Point<T> const& a, Point<T> const& b) {
-    return Point<T>{a.x - b.x, a.y - b.y};
+BOOST_AUTO_TEST_CASE(division)
+{
+    Point<int> p1{1024, 256};
+    BOOST_REQUIRE_EQUAL(p1 / 16, (Point<int>{64, 16}));
 }
 
-template<class T>
-Point<T> operator* (Point<T> const& a, double const& b) {
-    return Point<T>{a.x * b, a.y * b};
-}
-
-template<class T>
-Point<T> operator/ (Point<T> const& a, double const& b) {
-    return Point<T>{a.x / b, a.y / b};
-}
-
+BOOST_AUTO_TEST_SUITE_END()
